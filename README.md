@@ -60,6 +60,7 @@ custom styles.
 |name|VARCHAR(255)|NO|-|-|-|
 |username|VARCHAR(255)|NO|-|-|UNIQUE|
 |email|VARCHAR(255)|NO|-|-|UNIQUE|
+|password|VARCHAR(255)|NO|-|-|-|
 |private|BOOLEAN|NO|-|false|-|
 
 ### messages table
