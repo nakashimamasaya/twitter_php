@@ -59,19 +59,20 @@ class UsersTable extends Table
             ->maxLength('username', 255)
             ->requirePresence('username', 'create')
             ->notEmpty('username')
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table',  'message' => '既に使用されている名前です。']);
 
         $validator
-            ->email('email')
+            ->email('email',false,'メールの形式が間違っています')
             ->requirePresence('email', 'create')
             ->notEmpty('email')
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'すでに登録済みです']);
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
             ->requirePresence('password', 'create')
-            ->notEmpty('password');
+            ->notEmpty('password')
+            ->add('password', ['comWith' => ['rule' => ['compareWith', 'password_confirm'], 'message' => '確認用のパスワードと一致しません']]);
 
         $validator
             ->boolean('private')
