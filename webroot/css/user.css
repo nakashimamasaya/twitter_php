@@ -1,0 +1,25 @@
+body{
+  margin:0 auto;
+}
+
+.login{
+  float:right;
+  font-size: 10px;
+  margin-top:15px;
+}
+
+
+#check{
+  width:20px;
+  height:20px;
+}
+
+.signup__success{
+  margin:10px 0 0 10px;
+}
+
+.signup__success a{
+  padding:10px;
+  margin:0 auto;
+  border: medium solid #bbb;
+}
