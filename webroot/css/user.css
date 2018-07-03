@@ -2,16 +2,47 @@ body{
   margin:0 auto;
 }
 
+.users{
+  width:60%;
+  float: left;
+}
+
+.form button[type="submit"]{
+  float:left;
+  border-radius: 3px;
+  padding:5px 10px;
+  margin-left:20px;
+}
+
 .login{
   float:right;
   font-size: 10px;
   margin-top:15px;
 }
 
+.login__form{
+  width:90%;
+  height:80%;
+  margin:0 auto;
+}
 
 #check{
   width:20px;
   height:20px;
+}
+
+.signup{
+  padding-top:20px;
+  width:30%;
+  float:right;
+}
+
+.signup a{
+  padding:5px 40px;
+  color:white;
+  background-color:blue;
+  border:medium solid black;
+  border-radius: 5px;
 }
 
 .signup__success{
