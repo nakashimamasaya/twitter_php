@@ -28,6 +28,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('style.css') ?>
+    <?= $this->Html->script('http://code.jquery.com/jquery-1.11.3.min.js'); ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -35,7 +36,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <header>
-        仮ヘッダー
+        <?php
+            if(isset($user)){
+                echo $this->Html->link('ログアウト',['action' => 'logout']);
+            }
+        ?>
     </header><!-- /header -->
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
