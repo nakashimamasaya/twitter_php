@@ -29,9 +29,9 @@ class UsersController extends AppController
         }
         else{
             $user = $this->Users->newEntity();
-            if ($this->request->is('post')) {
+            if ($this->request->is('post')){
                 $user = $this->Users->patchEntity($user, $this->request->getData());
-                if ($this->Users->save($user)) {
+                if ($this->Users->save($user)){
                     $this->set('user', $user);
                     $this->render('complete');
                 }
@@ -46,7 +46,7 @@ class UsersController extends AppController
             $this->redirect(['controller'=>'Users','action'=>'index']);
         }
         else{
-            if ($this->request->is('post')) {
+            if ($this->request->is('post')){
                 $user = $this->Auth->identify();
                 if ($user) {
                     $this->Auth->setUser($user);
