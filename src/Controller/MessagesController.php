@@ -48,7 +48,6 @@ class MessagesController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error('つぶやきは１４０字以内にしてください');
         }
         $this->set(compact('message', 'messages', 'latest_message', 'user', 'message_count'));
     }
