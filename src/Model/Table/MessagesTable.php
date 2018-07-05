@@ -57,14 +57,9 @@ class MessagesTable extends Table
 
         $validator
             ->scalar('body')
-            ->maxLength('body', 140)
+            ->maxLength('body', 140, 'ツイートは140字以内で入力してください。')
             ->requirePresence('body', 'create')
-            ->notEmpty('body')
-            ->add('body',[
-                'maxLength' => [
-                    'rule' => ['maxLength', 140]
-                ]
-            ]);
+            ->notEmpty('body', 'ツイートを入力してください');
 
         $validator
             ->dateTime('stamp')
