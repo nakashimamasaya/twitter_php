@@ -7,10 +7,12 @@
     <?= $this->Form->create($message) ?>
     <fieldset>
         <?php
-            echo $this->Form->textarea('body',[
+            echo $this->Form->error('body');
+            echo $this->Form->input('body',[
                 'label' => '',
                 'required' => true,
-                'type' => 'text'
+                'type' => 'textarea',
+                'error' => false
             ]);
         ?>
     </fieldset>
