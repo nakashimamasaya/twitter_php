@@ -29,7 +29,7 @@ class UsersController extends AppController
         ];
         $show_user = $this->Users->find()->where(['id = ' => $id])->first();
         $messages = $this->paginate($this->Messages->find()->where(['user_id = ' => $id]));
-        $message_count = $this->Messages->find()->where(['user_id = ' => $id])->count();
+        $message_count = $this->Messages->countMessage($id);
         $this->set(compact('show_user', 'messages', 'message_count'));
     }
 

@@ -31,9 +31,7 @@ class MessagesController extends AppController
         $messages = $this->paginate($this->Messages);
         $latest_message = $this->Messages->find('all')->last();
         $user = $this->Auth->user();
-        $message_count = $this->Messages->find()->where(["user_id = "=> $user['id']])->count();
-        // $message_count = 0;
-
+        $message_count = $this->Messages->countMessage($user['id']);
         $message = $this->Messages->newEntity();
         if ($this->request->is('post')) {
             $stamp = Time::now();
