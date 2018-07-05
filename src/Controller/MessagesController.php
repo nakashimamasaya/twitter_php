@@ -44,10 +44,11 @@ class MessagesController extends AppController
                 'user_id' => $user['id']
             ]);
             if ($this->Messages->save($message)) {
-                $this->Flash->success(__('メッセージが作成されました。'));
+                $this->Flash->success(__('ツイートしました。'));
 
                 return $this->redirect(['action' => 'index']);
             }
+            $this->Flash->error('つぶやきは１４０字以内にしてください');
         }
         $this->set(compact('message', 'messages', 'latest_message', 'user', 'message_count'));
     }
@@ -64,7 +65,7 @@ class MessagesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $message = $this->Messages->get($id);
         if ($this->Messages->delete($message)) {
-            $this->Flash->success(__('The message has been deleted.'));
+            $this->Flash->success(__('ツイートを削除しました。'));
         } else {
             $this->Flash->error(__('The message could not be deleted. Please, try again.'));
         }
