@@ -1,0 +1,31 @@
+.message__form{
+  width:80%;
+}
+
+.latest_message{
+  float:left;
+}
+
+.columns+.columns:last-child{
+  float:left;
+}
+
+.message__list{
+  width:60%;
+}
+
+.message__body{
+  width:90%;
+}
+
+.message__index{
+  border:solid 2px black;
+  margin-top:2px;
+}
+
+.user_profile{
+  margin-top: 50px;
+  border:solid 3px black;
+  float:right;
+  width:30%;
+}
