@@ -18,7 +18,19 @@ class UsersController extends AppController
         $this->set('user', $this->Auth->user());
     }
 
-    public function index(){
+    public function view($id){
+        $this->loadModel('Messages');
+        $this->paginate = [
+            'limit' => 10,
+            'order' => [
+                'Messages.id' => 'desc'
+            ],
+            'contain' => ['Users']
+        ];
+        $show_user = $this->Users->find()->where(['id = ' => $id])->first();
+        $messages = $this->paginate($this->Messages->find()->where(['user_id = ' => $id]));
+        $message_count = $this->Messages->countMessage($id);
+        $this->set(compact('show_user', 'messages', 'message_count'));
     }
 
     public function signup()

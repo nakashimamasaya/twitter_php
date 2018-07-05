@@ -38,7 +38,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <header>
         <?php
             if(isset($user)){
-                echo $this->Html->link('ログアウト',['action' => 'logout']);
+                echo $this->Html->link('ログアウト',['controller' => 'users','action' => 'logout']);
             }
         ?>
     </header><!-- /header -->
