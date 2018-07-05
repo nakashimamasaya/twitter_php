@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 use Cake\I18n\Time;
 
 /**
@@ -14,11 +15,11 @@ use Cake\I18n\Time;
 class MessagesController extends AppController
 {
 
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|void
-     */
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+    }
+
     public function index()
     {
         $this->paginate = [
