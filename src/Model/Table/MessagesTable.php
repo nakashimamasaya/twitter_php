@@ -59,7 +59,12 @@ class MessagesTable extends Table
             ->scalar('body')
             ->maxLength('body', 140)
             ->requirePresence('body', 'create')
-            ->notEmpty('body');
+            ->notEmpty('body')
+            ->add('body',[
+                'maxLength' => [
+                    'rule' => ['maxLength', 140]
+                ]
+            ]);
 
         $validator
             ->dateTime('stamp')
