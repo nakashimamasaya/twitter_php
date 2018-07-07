@@ -15,6 +15,7 @@ class UsersController extends AppController
 {
     public function beforeFilter(Event $event)
     {
+        parent::beforeFilter($event);
         $this->set('user', $this->Auth->user());
     }
 
@@ -40,15 +41,15 @@ class UsersController extends AppController
             $this->redirect(['controller'=>'Users','action'=>'index']);
         }
         else{
-            $user = $this->Users->newEntity();
+            $new_user = $this->Users->newEntity();
             if ($this->request->is('post')){
-                $user = $this->Users->patchEntity($user, $this->request->getData());
-                if ($this->Users->save($user)){
-                    $this->set('user', $user);
+                $new_user = $this->Users->patchEntity($new_user, $this->request->getData());
+                if ($this->Users->save($new_user)){
+                    $this->set('new_user', $new_user);
                     $this->render('complete');
                 }
             }
-            $this->set(compact('user'));
+            $this->set(compact('new_user'));
         }
     }
 

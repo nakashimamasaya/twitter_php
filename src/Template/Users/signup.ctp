@@ -15,7 +15,7 @@
         </div>
     </h2>
     
-    <?= $this->Form->create($user) ?>
+    <?= $this->Form->create($new_user) ?>
     <fieldset>
         <?php
             echo $this->Form->control('name', [

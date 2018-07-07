@@ -83,7 +83,8 @@ class MessagesTable extends Table
         return $rules;
     }
 
-    public function countMessage(int $id){
+    public function countMessage(int $id = null){
+        if(is_null($id)) return 0;
         return $this->find()->where(['user_id = ' => $id])->count();
     }
 }
