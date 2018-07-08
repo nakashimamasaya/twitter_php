@@ -1,0 +1,15 @@
+.header__logo{
+  float:left;
+  margin-left:10px;
+  line-height: 40px;
+}
+
+.header__menu{
+  float:right;
+  margin-right:10px;
+  border:solid 3px white;
+  border-radius: 5px;
+  font-size: 20px;
+  background-color: white;
+  line-height: 40px;
+}

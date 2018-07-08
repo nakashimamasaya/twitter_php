@@ -28,6 +28,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('style.css') ?>
+    <?= $this->Html->css('header.css') ?>
     <?= $this->Html->script('http://code.jquery.com/jquery-1.11.3.min.js'); ?>
 
     <?= $this->fetch('meta') ?>
@@ -36,11 +37,20 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 <body>
     <header>
-        <?php
-            if(isset($user)){
-                echo $this->Html->link('ログアウト',['controller' => 'users','action' => 'logout']);
-            }
-        ?>
+        <div class='header__logo'>
+            <?= $this->Html->image('twitter.jpeg',['alt' => 'Twitters', 'width'=>'200','height'=>'100', 'url' => ['controller' => 'messages', 'action' => 'index']]) ?>
+        </div>
+        <div class='header__menu'>
+            <?= $this->Html->link('ホーム', ['controller' => 'messages', 'action' => 'index']) ?>
+            <?php if(isset($user)): ?>
+                <?= $this->Html->link('友達を検索','*') ?>
+                <?= $this->Html->link('ログアウト',['controller' => 'users','action' => 'logout']) ?>
+            <?php else: ?>
+                <?= $this->Html->link('ユーザ登録', ['controller' => 'users', 'action' => 'signup']) ?>
+                <?= $this->Html->link('ログイン', ['controller' => 'users', 'action' => 'login']) ?>
+            <?php endif ?>
+        </div>
+        
     </header><!-- /header -->
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
