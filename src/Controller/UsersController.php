@@ -19,7 +19,7 @@ class UsersController extends AppController
     }
 
     public function view($id){
-        $this->loadModel('Messages');
+        $this->loadModel(['Messages']);
         $this->paginate = [
             'limit' => 10,
             'order' => [
@@ -73,6 +73,28 @@ class UsersController extends AppController
     public function logout(){
         $this->Flash->success('ログアウトしました');
         return $this->redirect($this->Auth->logout());
+    }
+    public function find(){
+
+    }
+
+    public function result($find = null){
+        $this->loadModel('Messages');
+        if($this->request->is('post')){
+            $find = $this->request->data['find'];
+            $this->redirect(['action' => 'result', $find]);
+        }
+        else{
+            $this->paginate = [
+                'limit' => 10,
+                'order' => [
+                    'Users.id' => 'desc'
+                ],
+                'contain' => ['Messages']
+            ];
+            $results = $this->paginate($this->Users->find('all')->where(["name like " => '%'. $find . '%'])->orWhere(["username like " => '%' . $find . '%']));
+            $this->set(compact('find', 'results'));
+        }
     }
 
 }
