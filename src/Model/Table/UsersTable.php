@@ -36,8 +36,9 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Messages',[
-            'foreignKey' => 'message_id',
+            'foreignKey' => 'user_id'
         ]);
+        $this->belongsToMany('Users');
     }
 
     /**
