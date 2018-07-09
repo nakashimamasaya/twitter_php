@@ -1,0 +1,38 @@
+.user__find{
+  margin-left: 20px;
+}
+
+.user__find input{
+  width:50%;
+  float: left;
+}
+
+.user__find button{
+  float:left;
+  padding:5px 10px;
+  height: 2.3125rem;
+}
+
+.find_list{
+  border-top: dashed 2px gray;
+  width:70%;
+  margin:0 auto;
+}
+
+li{
+  list-style: none;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.button{
+  padding:5px 10px;
+}
+
+.error_message{
+  color:red;
+}
+
+#zero_result{
+  color:red;
+}

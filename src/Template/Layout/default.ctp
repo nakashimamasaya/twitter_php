@@ -43,7 +43,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         <div class='header__menu'>
             <?= $this->Html->link('ホーム', ['controller' => 'messages', 'action' => 'index']) ?>
             <?php if(isset($user)): ?>
-                <?= $this->Html->link('友達を検索','*') ?>
+                <?= $this->Html->link('友達を検索',['controller' => 'users','action' => 'find']) ?>
                 <?= $this->Html->link('ログアウト',['controller' => 'users','action' => 'logout']) ?>
             <?php else: ?>
                 <?= $this->Html->link('ユーザ登録', ['controller' => 'users', 'action' => 'signup']) ?>

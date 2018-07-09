@@ -17,19 +17,20 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         $this->set('user', $this->Auth->user());
+        $this->Auth->allow();
     }
 
     public function view($id){
-        $this->loadModel('Messages');
+        $this->loadModel(['Messages', 'Following']);
         $this->paginate = [
             'limit' => 10,
             'order' => [
                 'Messages.id' => 'desc'
             ],
-            'contain' => ['Users']
+            'contain' => ['Users', 'Following']
         ];
         $show_user = $this->Users->find()->where(['id = ' => $id])->first();
-        $messages = $this->paginate($this->Messages->find()->where(['user_id = ' => $id]));
+        $messages = $this->paginate($this->Messages->find()->contain(['Messages'])->where(['user_id = ' => $id]));
         $message_count = $this->Messages->countMessage($id);
         $this->set(compact('show_user', 'messages', 'message_count'));
     }
@@ -41,15 +42,15 @@ class UsersController extends AppController
             $this->redirect(['controller'=>'Users','action'=>'index']);
         }
         else{
-            $new_user = $this->Users->newEntity();
+            $user = $this->Users->newEntity();
             if ($this->request->is('post')){
-                $new_user = $this->Users->patchEntity($new_user, $this->request->getData());
-                if ($this->Users->save($new_user)){
-                    $this->set('new_user', $new_user);
+                $user = $this->Users->patchEntity($user, $this->request->getData());
+                if ($this->Users->save($user)){
+                    $this->set('user', $user);
                     $this->render('complete');
                 }
             }
-            $this->set(compact('new_user'));
+            $this->set(compact('user'));
         }
     }
 
@@ -74,6 +75,30 @@ class UsersController extends AppController
     public function logout(){
         $this->Flash->success('ログアウトしました');
         return $this->redirect($this->Auth->logout());
+    }
+    public function find(){
+
+    }
+
+    public function result($find = null){
+        $this->loadModel('Messages');
+        $this->loadModel('Following');
+        if($this->request->is('post')){
+            $find = $this->request->data['find'];
+            $this->redirect(['action' => 'result', $find]);
+        }
+        else{
+            $this->paginate = [
+                'limit' => 10,
+                'order' => [
+                    'Users.id' => 'desc'
+                ],
+                'contain' => ['Messages']
+            ];
+            $results = $this->paginate($this->Users->find('all')->where(["name like " => '%'. $find . '%'])->orWhere(["username like " => '%' . $find . '%']));
+            $follower = $this->Following->followUsers($this->Auth->user()['id']);
+            $this->set(compact('find', 'results', 'follower'));
+        }
     }
 
 }
