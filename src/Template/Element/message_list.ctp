@@ -25,24 +25,3 @@
         </ul>
     </div>
 </div>
-<?php if(isset($show_user)): ?>
-    <div class="user_profile">
-        <h3><?= h($show_user['username']) ?></h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>フォロー数</th>
-                    <th>フォロワー数</th>
-                    <th><?= $message->has('user') ? $this->Html->link('投稿数', ['controller' => 'Users', 'action' => 'view', $message->user->id]) : '' ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>0</td>
-                    <td>0</td>
-                    <td><?= $message_count ?></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-<?php endif ?>
