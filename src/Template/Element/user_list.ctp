@@ -12,11 +12,11 @@
         <?php else: ?>
           <p>まだツイートしていません</p>
         <?php endif ?>
-        <?php if(!in_array($result->user->id, $follow) && $user['id'] != $result->user->id): ?>
+        <?php if(isset($user) && !in_array($result->user->id, $follow) && $user['id'] != $result->user->id): ?>
           <div class="actions">
             <?= $this->Form->postLink(__('フォロー設定'), ['controller' => 'following','action' => 'add', $result->user->id, $type, $show_user->id], ['confirm' => __('フォローしてよろしいですか？')]) ?>
           </div>
-        <?php elseif($user['id'] != $result->user->id): ?>
+        <?php elseif(isset($user) && $user['id'] != $result->user->id): ?>
           <div class="actions">
             <?= $this->Form->postLink(__('フォロー設定'), ['controller' => 'following','action' => 'delete', $result->user->id, $type, $show_user->id], ['confirm' => __('フォローを解除してよろしいですか？')]) ?>
           </div>
