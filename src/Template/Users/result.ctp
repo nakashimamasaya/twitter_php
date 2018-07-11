@@ -22,7 +22,7 @@
       <?php else: ?>
         <p>まだツイートしていません</p>
       <?php endif ?>
-      <?php if(!in_array($result->id, $follower)): ?>
+      <?php if(isset($user) && !in_array($result->id, $follower)): ?>
         <div class='follow_<?= $result->id ?>'>
           <div class='error_message' id='error_<?= $result->id ?>'></div>
           <?php echo "<div class='button' id='$result->id'>フォローする</div>"?>

@@ -6,6 +6,11 @@
   float:left;
 }
 
+.content, #actions-sidebar {
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+}
+
 .columns+.columns:last-child{
   float:left;
 }
@@ -54,6 +59,7 @@ li{
 .tweet__title{
   float:left;
 }
+
 .tweet__count{
   float:right;
 }
