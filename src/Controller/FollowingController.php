@@ -12,7 +12,7 @@ use App\Controller\AppController;
  */
 class FollowingController extends AppController
 {
-    public function add()
+    public function add($id = null, $type = null, $source = null)
     {   
         $this->autoRender = false;
         $this->loadModel('Users');
@@ -31,19 +31,36 @@ class FollowingController extends AppController
                 echo "NO";
             }
         }
+        if ($this->request->is('post')) {
+            $following->set([
+                'user_id' => $this->Auth->user()['id'],
+                'user' => $this->Auth->user(),
+                'follower_id' => $id,
+                'follower' => $this->Users->get($id)
+            ]);
+            if ($this->Following->save($following)) {
+                $this->Flash->success(__('フォローしました'));
+            }
+            if($type == null)
+                $this->redirect(['controller'=>'Messages','action'=>'index']);
+            else
+                $this->redirect(['controller'=>'Users','action'=>$type, $source]);
+        }
+
         $this->set(compact('following'));
     }
 
-    public function delete($id = null)
+
+    public function delete($id = null, $type = null, $source = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $following = $this->Following->get($id);
+        $following = $this->Following->find()->where(['user_id = ' => $this->Auth->user()['id']])->andWhere(['follower_id = ' => $id])->first();
         if ($this->Following->delete($following)) {
-            $this->Flash->success(__('The following has been deleted.'));
-        } else {
-            $this->Flash->error(__('The following could not be deleted. Please, try again.'));
+            $this->Flash->success(__('フォローを解除しました'));
         }
-
-        return $this->redirect(['action' => 'index']);
+        if($type == null)
+            $this->redirect(['controller'=>'Messages','action'=>'index']);
+        else
+            $this->redirect(['controller'=>'Users','action'=>$type, $source]);
     }
 }

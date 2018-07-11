@@ -75,11 +75,12 @@ class FollowingTable extends Table
 
     public function followerUsers(int $user_id = null){
         if(is_null($user_id)) return false;
-        $results = $this->find()->where(['follower_id = ' => $user_id])->to_Array();
+        $results = $this->find()->where(['follower_id = ' => $user_id]);
         $array = [];
         foreach($results as $result){
             array_push($array, $result['user_id']);
         }
         return $array;
     }
+
 }

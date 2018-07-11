@@ -34,3 +34,26 @@
   color:red;
   font-size:15px;
 }
+
+li{
+  list-style: none;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.left{
+  float: left;
+}
+
+.tweet{
+  width: 100%;
+  padding:10px 10px;
+  color:#1798A5;
+}
+
+.tweet__title{
+  float:left;
+}
+.tweet__count{
+  float:right;
+}

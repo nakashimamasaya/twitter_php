@@ -20,20 +20,23 @@ class UsersController extends AppController
         $this->Auth->allow();
     }
 
-    public function view($id){
-        $this->loadModel(['Messages', 'Following']);
+    public function view($id = null){
+        $this->loadModel('Messages');
+        $this->loadModel('Following');
         $this->paginate = [
             'limit' => 10,
             'order' => [
                 'Messages.id' => 'desc'
             ],
-            'contain' => ['Users', 'Following']
+            'contain' => ['Users']
         ];
         $show_user = $this->Users->find()->where(['id = ' => $id])->first();
-        $messages = $this->paginate($this->Messages->find()->contain(['Messages'])->where(['user_id = ' => $id]));
+        $messages = $this->paginate($this->Messages->find()->where(['user_id = ' => $id]));
         $message_count = $this->Messages->countMessage($id);
-        $this->set(compact('show_user', 'messages', 'message_count'));
-    }
+        $follow = $this->Following->followUsers($id);
+        $follower = $this->Following->followerUsers($id);
+        $this->set(compact('show_user', 'messages', 'message_count' ,'follow', 'follower'));
+     }
 
     public function signup()
     {
@@ -42,7 +45,7 @@ class UsersController extends AppController
             $this->redirect(['controller'=>'Users','action'=>'index']);
         }
         else{
-            $user = $this->Users->newEntity();
+            $new_user = $this->Users->newEntity();
             if ($this->request->is('post')){
                 $user = $this->Users->patchEntity($user, $this->request->getData());
                 if ($this->Users->save($user)){
@@ -50,7 +53,7 @@ class UsersController extends AppController
                     $this->render('complete');
                 }
             }
-            $this->set(compact('user'));
+            $this->set(compact('new_user'));
         }
     }
 
@@ -100,5 +103,58 @@ class UsersController extends AppController
             $this->set(compact('find', 'results', 'follower'));
         }
     }
+
+    public function follow($id = null){
+        $this->loadModel('Messages');
+        $this->loadModel('Following');
+
+        $this->paginate = [
+            'limit' => 10,
+            'order' => [
+                'Users.id' => 'desc'
+            ],
+            'contain' => ['Users']
+        ];
+
+
+        $show_user = $this->Users->find()->where(['id = ' => $id])->first();
+        $message_count = $this->Messages->countMessage($id);
+        $follow = $this->Following->followUsers($id);
+        $follower = $this->Following->followerUsers($id);
+        $login_user_follow = $this->Following->followUsers($this->Auth->user()['id']);
+
+        $users = $this->paginate($this->Following->find('all')->contain('Users')->where(["user_id = " => $id]));
+        foreach(array_map(null, $follow, $users->toArray()) as [$follow_id, $user]) {
+            $user->user = $this->Users->find()->contain('Messages')->where(['id = ' => $follow_id])->first();
+        }
+        $this->set(compact('users', 'show_user', 'message_count' ,'follow', 'follower', 'login_user_follow'));
+
+    }
+
+    public function follower($id = null){
+        $this->loadModel('Messages');
+        $this->loadModel('Following');
+
+        $this->paginate = [
+            'limit' => 10,
+            'order' => [
+                'Users.id' => 'desc'
+            ],
+            'contain' => ['Users']
+        ];
+
+
+        $users = $this->paginate($this->Following->find()->where(['follower_id = ' => $id]));
+        $show_user = $this->Users->find()->where(['id = ' => $id])->first();
+        $message_count = $this->Messages->countMessage($id);
+        $follow = $this->Following->followUsers($id);
+        $follower = $this->Following->followerUsers($id);
+        $login_user_follow = $this->Following->followUsers($this->Auth->user()['id']);
+        foreach(array_map(null, $follower, $users->toArray()) as [$follower_id, $user]) {
+            $user->user = $this->Users->find()->contain('Messages')->where(['id = ' => $follower_id])->first();
+        }
+        $this->set(compact('users', 'show_user', 'message_count' ,'follow', 'follower', 'login_user_follow', 'test'));
+    }
+
 
 }

@@ -35,3 +35,15 @@
     'message_count' => $message_count
     ])
 ?>
+
+<?php if(isset($user)): ?>
+    <?= $this->element('user_details',[
+        'messages' => $messages,
+        'show_user' => $user,
+        'user' => $user,
+        'message_count' => $message_count,
+        'follow' => $follow,
+        'follower' => $follower,
+        ])
+    ?>
+<?php endif ?>

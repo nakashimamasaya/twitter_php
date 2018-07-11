@@ -22,6 +22,7 @@ class MessagesController extends AppController
 
     public function index()
     {
+        $this->loadModel('Following');
         $this->paginate = [
             'limit' => 10,
             'order' => [
@@ -33,6 +34,9 @@ class MessagesController extends AppController
         $latest_message = $this->Messages->find('all')->last();
         $user = $this->Auth->user();
         $message_count = $this->Messages->countMessage($user['id']);
+        $follow = $this->Following->followUsers($user['id']);
+        $follower = $this->Following->followerUsers($user['id']);
+
         $message = $this->Messages->newEntity();
         if ($this->request->is('post')) {
             $stamp = Time::now();
@@ -48,7 +52,7 @@ class MessagesController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
         }
-        $this->set(compact('message', 'messages', 'latest_message', 'user', 'message_count'));
+        $this->set(compact('message', 'messages', 'latest_message', 'user', 'message_count', 'follow', 'follower'));
     }
 
     /**
