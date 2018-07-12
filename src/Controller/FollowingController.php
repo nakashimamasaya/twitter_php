@@ -31,7 +31,7 @@ class FollowingController extends AppController
                 echo "NO";
             }
         }
-        if ($this->request->is('post')) {
+        else if ($this->request->is('post')) {
             $following->set([
                 'user_id' => $this->Auth->user()['id'],
                 'user' => $this->Auth->user(),
