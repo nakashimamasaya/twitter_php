@@ -47,7 +47,7 @@ class UsersController extends AppController
         else{
             $new_user = $this->Users->newEntity();
             if ($this->request->is('post')){
-                $user = $this->Users->patchEntity($user, $this->request->getData());
+                $user = $this->Users->patchEntity($new_user, $this->request->getData());
                 if ($this->Users->save($user)){
                     $this->set('user', $user);
                     $this->render('complete');
