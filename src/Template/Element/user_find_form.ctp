@@ -1,6 +1,6 @@
 <div class='user__find clearfix'>
-  <?= $this->Form->create(false, ['action' => 'result']) ?>
-  <?= $this->Form->input('find',['label' => '誰を検索しますか']); ?>
+  <?= $this->Form->create(false, ['url' => 'users/result']) ?>
+  <?= $this->Form->control('find',['label' => '誰を検索しますか', 'type' => 'text']); ?>
   <?= $this->Form->button('検索') ?>
   <?= $this->Form->end() ?>
 </div>

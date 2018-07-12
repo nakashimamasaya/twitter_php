@@ -9,7 +9,7 @@
         <fieldset>
             <?php
                 echo $this->Form->error('body');
-                echo $this->Form->input('body',[
+                echo $this->Form->console('body',[
                     'label' => '',
                     'required' => true,
                     'type' => 'textarea',

@@ -5,7 +5,7 @@
             <tr>
                 <th><?= $this->Html->link('フォロー数', ['controller' => 'Users', 'action' => 'follow', $show_user['id']]) ?></th>
                 <th><?= $this->Html->link('フォロワー数', ['controller' => 'Users', 'action' => 'follower', $show_user['id']]) ?></th>
-                <?php if($this->request->action == 'index'): ?>
+                <?php if($this->request->getParam('controller') == 'index'): ?>
                     <th><?= $this->Html->link('投稿数', ['controller' => 'Users', 'action' => 'view', $show_user['id']]) ?></th>
                 <?php endif ?>
             </tr>
@@ -14,13 +14,13 @@
              <tr>
                 <td><?php echo count($follow) ?></td>
                 <td><?php echo count($follower) ?></td>
-                <?php if($this->request->action == 'index'): ?>
+                <?php if($this->request->getParam('controller') == 'index'): ?>
                     <td><?= $message_count ?></td>
                 <?php endif ?>
             </tr>
         </tbody>
     </table>
-    <?php if($this->request->action != 'index'): ?>
+    <?php if($this->request->getParam('controller') != 'index'): ?>
         <div class="tweet clearfix">
             <?= $this->Html->link(
                 "<div class='tweet__title'>つぶやき</div><div class='tweet__count'>${message_count}</div>",

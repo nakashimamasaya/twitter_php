@@ -87,7 +87,7 @@ class UsersController extends AppController
         $this->loadModel('Messages');
         $this->loadModel('Following');
         if($this->request->is('post')){
-            $find = $this->request->data['find'];
+            $find = $this->request->getData('find');
             $this->redirect(['action' => 'result', $find]);
         }
         else{
@@ -98,7 +98,7 @@ class UsersController extends AppController
                 ],
                 'contain' => ['Messages']
             ];
-            $results = $this->paginate($this->Users->find('all')->where(["name like " => '%'. $find . '%'])->orWhere(["username like " => '%' . $find . '%']));
+            $results = $this->paginate($this->Users->find('all')->where(["name like " => '%'. $find . '%'])->Where(["username like " => '%' . $find . '%']));
             $follower = $this->Following->followUsers($this->Auth->user()['id']);
             $this->set(compact('find', 'results', 'follower'));
         }
