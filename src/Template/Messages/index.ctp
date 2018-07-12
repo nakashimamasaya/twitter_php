@@ -19,9 +19,13 @@
         </fieldset>
         <div class='latest_message'>
             <b>最新つぶやき</b>
-            <?= nl2br($this->Text->autoLink($latest_message->body)) ?>
-            <br>
-            <?php echo $latest_message->stamp->i18nFormat('YYYY-MM-dd HH:mm:ss') ?>
+            <?php if(isset($latest_message)): ?>
+                <?= nl2br($this->Text->autoLink($latest_message->body)) ?>
+                <br>
+                <?php echo $latest_message->stamp->i18nFormat('YYYY-MM-dd HH:mm:ss') ?>
+            <?php else: ?>
+                <p>つぶやきはありません</p>
+            <?php endif ?>
         </div>
         <?= $this->Form->button(__('投稿する')) ?>
         <?= $this->Form->end() ?>
