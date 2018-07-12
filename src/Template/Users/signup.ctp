@@ -27,7 +27,7 @@
             echo $this->Form->control('password', [
                 'label' => 'パスワード'
             ]);
-            echo $this->Form->input('password_confirm',[
+            echo $this->Form->control('password_confirm',[
                 'type' => 'password',
                 'label' => 'パスワード（確認）'
             ]);
