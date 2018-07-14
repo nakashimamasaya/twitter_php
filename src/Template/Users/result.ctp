@@ -3,7 +3,7 @@
   echo $this->Html->script('add_follower.js');
 ?>
 <?php if(isset($find)): ?>
-  <h1><?= $find ?>の検索結果:</h1>
+  <h1><?= h($find) ?>の検索結果:</h1>
 <?php endif ?>
 <?= $this->element('user_find_form')?>
 <?php if($results->count() == 0 || is_null($find)):?>
