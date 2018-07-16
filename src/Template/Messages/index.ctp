@@ -1,5 +1,6 @@
 <?php
  echo $this->Html->css('message.css');
+ echo $this->Html->script('submit_button.js');
 ?>
 
 <?php if(isset($user)): ?>
