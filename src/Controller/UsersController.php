@@ -88,6 +88,7 @@ class UsersController extends AppController
         $this->loadModel('Following');
         if($this->request->is('post')){
             $find = $this->request->getData('find');
+            $find = urlencode($find);
             $this->redirect(['action' => 'result', $find]);
         }
         else{
@@ -100,6 +101,7 @@ class UsersController extends AppController
             ];
             $results = $this->paginate($this->Users->find('all')->where(["name like " => '%'. $find . '%'])->Where(["username like " => '%' . $find . '%']));
             $follower = $this->Following->followUsers($this->Auth->user()['id']);
+            $find = urldecode($find);
             $this->set(compact('find', 'results', 'follower'));
         }
     }
