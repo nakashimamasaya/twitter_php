@@ -16,7 +16,7 @@
       <?= $result->name ?>
       <br>
       <?php if(isset($result->messages[0])): ?>
-        <?= nl2br(end($result->messages)['body']) ?>
+        <?= nl2br($this->Text->autoLink(end($result->messages)['body'])) ?>
         <br>
         <?= h(end($result->messages)['stamp']->i18nFormat('YYYY-MM-dd HH:mm:ss')) ?>
       <?php else: ?>
