@@ -8,7 +8,7 @@
                 <!-- <?php echo $this->Text->autoLink($message->body) ?> -->
             </div>
             <div class='message__stamp'>
-                <?= h($message->stamp->i18nFormat('YYYY-MM-dd HH:mm:ss')) ?>
+                <?= h($message->stamp->i18nFormat('YYYY年MM月dd日 HH時mm分ss秒')) ?>
             </div>
             <?php if($user['id'] == $message->user->id): ?>
                 <div class="actions">

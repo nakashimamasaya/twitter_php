@@ -18,7 +18,7 @@
       <?php if(isset($result->messages[0])): ?>
         <?= nl2br($this->Text->autoLink(end($result->messages)['body'])) ?>
         <br>
-        <?= h(end($result->messages)['stamp']->i18nFormat('YYYY-MM-dd HH:mm:ss')) ?>
+        <?= h(end($result->messages)['stamp']->i18nFormat('YYYY年MM月dd日 HH時mm分ss秒')) ?>
       <?php else: ?>
         <p>まだツイートしていません</p>
       <?php endif ?>

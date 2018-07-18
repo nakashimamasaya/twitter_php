@@ -23,7 +23,7 @@
             <?php if(isset($latest_message)): ?>
                 <?= nl2br($this->Text->autoLink($latest_message->body)) ?>
                 <br>
-                <?php echo $latest_message->stamp->i18nFormat('YYYY-MM-dd HH:mm:ss') ?>
+                <?php echo $latest_message->stamp->i18nFormat('YYYY年MM月dd日 HH時mm分ss秒') ?>
             <?php else: ?>
                 <p>つぶやきはありません</p>
             <?php endif ?>
