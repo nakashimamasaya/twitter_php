@@ -33,7 +33,11 @@
   <div class="paginator">
     <ul class="pagination">
       <?= $this->Paginator->prev('< ' . __('前へ')) ?>
-      <?= $this->Paginator->numbers() ?>
+      <?php if(empty($this->Paginator->numbers())): ?>
+        <li style="color: rgba(0, 0 ,0 , 0.54);">1</li>
+      <?php else: ?>
+        <?= $this->Paginator->numbers() ?>
+      <?php endif ?>
       <?= $this->Paginator->next(__('次へ') . ' >') ?>
     </ul>
   </div>
