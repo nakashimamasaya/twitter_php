@@ -18,18 +18,24 @@ class FollowingController extends AppController
         $this->loadModel('Users');
         $following = $this->Following->newEntity();
         if ($this->request->is('ajax')) {
-            $following->set([
-                'user_id' => $this->Auth->user()['id'],
-                'user' => $this->Auth->user(),
-                'follower_id' => $this->request->getData('id'),
-                'follower' => $this->Users->get($this->request->getData('id'))
-            ]);
-            if ($this->Following->save($following)) {
-                echo "OK";
+            $res = '';
+            if(empty($this->Users->find()->where(['id' => $this->request->getData("id")])->first())){
+                $res .= "NO";
+            }else{
+                $following->set([
+                    'user_id' => $this->Auth->user()['id'],
+                    'user' => $this->Auth->user(),
+                    'follower_id' => $this->request->getData('id'),
+                    'follower' => $this->Users->get($this->request->getData('id'))
+                ]);
+                if ($this->Following->save($following)) {
+                    $res .= "OK";
+                }
+                else {
+                    $res .= "NO";
+                }
             }
-            else {
-                echo "NO";
-            }
+            echo json_encode(["state" => "200" ,"result" => $res]);
         }
         else if ($this->request->is('post')) {
             $following->set([
