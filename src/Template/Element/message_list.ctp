@@ -5,14 +5,13 @@
             <div class='message__body'>
                 <?= $message->has('user') ? $this->Html->link($message->user->name, ['controller' => 'Users', 'action' => 'view', $message->user->id]) : '' ?>
                 <?= nl2br($this->Text->autoLink($message->body)) ?>
-                <!-- <?php echo $this->Text->autoLink($message->body) ?> -->
             </div>
             <div class='message__stamp'>
                 <?= h($message->stamp->i18nFormat('YYYY年MM月dd日 HH時mm分ss秒')) ?>
             </div>
             <?php if($user['id'] == $message->user->id): ?>
                 <div class="actions">
-                    <?= $this->Form->postLink(__('削除'), ['controller' => 'messages','action' => 'delete', $message->id], ['confirm' => __('削除してよろしいですか？ # {0}?', $message->id)]) ?>
+                    <?= $this->Form->postLink(__('削除'), ['controller' => 'messages','action' => 'delete', $message->id], ['confirm' => __('削除してよろしいですか？')]) ?>
                 </div>
             <?php endif ?>
         </div>

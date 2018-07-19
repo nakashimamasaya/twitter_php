@@ -65,11 +65,16 @@ class MessagesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $message = $this->Messages->get($id);
-        if ($this->Messages->delete($message)) {
-            $this->Flash->success(__('ツイートを削除しました。'));
-        } else {
-            $this->Flash->error(__('The message could not be deleted. Please, try again.'));
+        if(empty($this->Messages->find()->where(['id' => $id])->first())) {
+            $this->Flash->error(__('ツイートの削除に失敗しました。'));
+        }
+        else{
+            $message = $this->Messages->get($id);
+            if ($this->Messages->delete($message)) {
+                $this->Flash->success(__('ツイートを削除しました。'));
+            } else {
+                $this->Flash->error(__('ツイートの削除に失敗しました。'));
+            }
         }
 
         return $this->redirect(['action' => 'index']);
