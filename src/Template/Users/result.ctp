@@ -31,7 +31,7 @@
     </div>
   <?php endforeach ?>
   <div class="paginator">
-    <ul cass="pagination">
+    <ul class="pagination">
       <?= $this->Paginator->prev('< ' . __('前へ')) ?>
       <?= $this->Paginator->numbers() ?>
       <?= $this->Paginator->next(__('次へ') . ' >') ?>
