@@ -30,19 +30,25 @@ class UsersController extends AppController
             ],
             'contain' => ['Users']
         ];
-        $show_user = $this->Users->find()->where(['id = ' => $id])->first();
-        $messages = $this->paginate($this->Messages->find()->where(['user_id = ' => $id]));
-        $message_count = $this->Messages->countMessage($id);
-        $follow = $this->Following->followUsers($id);
-        $follower = $this->Following->followerUsers($id);
-        $this->set(compact('show_user', 'messages', 'message_count' ,'follow', 'follower'));
+        if(empty($this->Users->find()->where(['id' => $id])->first())) {
+            $this->Flash->error("指定されたユーザは存在しません");
+            $this->redirect(['controller'=>'Messages','action'=>'index']);
+        }
+        else{
+            $show_user = $this->Users->find()->where(['id = ' => $id])->first();
+            $messages = $this->paginate($this->Messages->find()->where(['user_id = ' => $id]));
+            $message_count = $this->Messages->countMessage($id);
+            $follow = $this->Following->followUsers($id);
+            $follower = $this->Following->followerUsers($id);
+            $this->set(compact('show_user', 'messages', 'message_count' ,'follow', 'follower'));
+        }
      }
 
     public function signup()
     {
         $user = $this->Auth->user();
         if(isset($user)){
-            $this->redirect(['controller'=>'Users','action'=>'index']);
+            $this->redirect(['controller'=>'Messages','action'=>'index']);
         }
         else{
             $new_user = $this->Users->newEntity();
@@ -60,7 +66,7 @@ class UsersController extends AppController
     public function login(){
         $user = $this->Auth->user();
         if(isset($user)){
-            $this->redirect(['controller'=>'Users','action'=>'index']);
+            $this->redirect(['controller'=>'Messages','action'=>'index']);
         }
         else{
             if ($this->request->is('post')){
@@ -118,18 +124,23 @@ class UsersController extends AppController
             'contain' => ['Users']
         ];
 
-
-        $show_user = $this->Users->find()->where(['id = ' => $id])->first();
-        $message_count = $this->Messages->countMessage($id);
-        $follow = $this->Following->followUsers($id);
-        $follower = $this->Following->followerUsers($id);
-        $login_user_follow = $this->Following->followUsers($this->Auth->user()['id']);
-
-        $users = $this->paginate($this->Following->find('all')->contain('Users')->where(["user_id = " => $id]));
-        foreach(array_map(null, $follow, $users->toArray()) as [$follow_id, $user]) {
-            $user->user = $this->Users->find()->contain('Messages')->where(['id = ' => $follow_id])->first();
+        if(empty($this->Users->find()->where(['id' => $id])->first())) {
+            $this->Flash->error("指定されたユーザは存在しません");
+            $this->redirect(['controller'=>'Messages','action'=>'index']);
         }
-        $this->set(compact('users', 'show_user', 'message_count' ,'follow', 'follower', 'login_user_follow'));
+        else{
+            $show_user = $this->Users->find()->where(['id = ' => $id])->first();
+            $message_count = $this->Messages->countMessage($id);
+            $follow = $this->Following->followUsers($id);
+            $follower = $this->Following->followerUsers($id);
+            $login_user_follow = $this->Following->followUsers($this->Auth->user()['id']);
+
+            $users = $this->paginate($this->Following->find('all')->contain('Users')->where(["user_id = " => $id]));
+            foreach(array_map(null, $follow, $users->toArray()) as [$follow_id, $user]) {
+                $user->user = $this->Users->find()->contain('Messages')->where(['id = ' => $follow_id])->first();
+            }
+            $this->set(compact('users', 'show_user', 'message_count' ,'follow', 'follower', 'login_user_follow'));
+        }
 
     }
 
@@ -145,17 +156,22 @@ class UsersController extends AppController
             'contain' => ['Users']
         ];
 
-
-        $users = $this->paginate($this->Following->find()->where(['follower_id = ' => $id]));
-        $show_user = $this->Users->find()->where(['id = ' => $id])->first();
-        $message_count = $this->Messages->countMessage($id);
-        $follow = $this->Following->followUsers($id);
-        $follower = $this->Following->followerUsers($id);
-        $login_user_follow = $this->Following->followUsers($this->Auth->user()['id']);
-        foreach(array_map(null, $follower, $users->toArray()) as [$follower_id, $user]) {
-            $user->user = $this->Users->find()->contain('Messages')->where(['id = ' => $follower_id])->first();
+        if(empty($this->Users->find()->where(['id' => $id])->first())) {
+            $this->Flash->error("指定されたユーザは存在しません");
+            $this->redirect(['controller'=>'Messages','action'=>'index']);
         }
-        $this->set(compact('users', 'show_user', 'message_count' ,'follow', 'follower', 'login_user_follow', 'test'));
+        else{
+            $users = $this->paginate($this->Following->find()->where(['follower_id = ' => $id]));
+            $show_user = $this->Users->find()->where(['id = ' => $id])->first();
+            $message_count = $this->Messages->countMessage($id);
+            $follow = $this->Following->followUsers($id);
+            $follower = $this->Following->followerUsers($id);
+            $login_user_follow = $this->Following->followUsers($this->Auth->user()['id']);
+            foreach(array_map(null, $follower, $users->toArray()) as [$follower_id, $user]) {
+                $user->user = $this->Users->find()->contain('Messages')->where(['id = ' => $follower_id])->first();
+            }
+            $this->set(compact('users', 'show_user', 'message_count' ,'follow', 'follower', 'login_user_follow', 'test'));
+        }
     }
 
 
