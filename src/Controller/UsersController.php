@@ -99,7 +99,7 @@ class UsersController extends AppController
                 ],
                 'contain' => ['Messages']
             ];
-            $results = $this->paginate($this->Users->find('all')->where(["name like " => '%'. $find . '%'])->Where(["username like " => '%' . $find . '%']));
+            $results = $this->paginate($this->Users->find('all')->where(["OR" => [["username like " => "%" . $find . "%"],["name like " => "%" . $find . "%"]]]));
             $follower = $this->Following->followUsers($this->Auth->user()['id']);
             $find = urldecode($find);
             $this->set(compact('find', 'results', 'follower'));
